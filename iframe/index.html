@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html {
+        background-color: #00bfb2;
+        color: hsl(184, 58%, 16%);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      button {
+        background-color: #028090;
+        border-style: none;
+        padding: 1em;
+        border-radius: .2em;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Iframe site</h1>
+
+    <button onclick="addElement()">Add paragraph</button>
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nisi iusto
+      numquam possimus animi rem corrupti voluptate nostrum eum sint
+      voluptatibus est ipsam ducimus veniam, itaque officiis eius, maxime hic.
+    </p>
+
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, veritatis
+      magni? Sed itaque quis ratione consequatur iure nihil eos sint sit nam
+      vero, sequi repellendus omnis! Ipsam quos voluptatibus voluptate!
+    </p>
+
+    <script>
+      function addElement() {
+        const p = document.createElement("p");
+        p.textContent = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, veritatis
+            magni? Sed itaque quis ratione consequatur iure nihil eos sint sit nam
+            vero, sequi repellendus omnis! Ipsam quos voluptatibus voluptate!`;
+        document.body.append(p);
+      }
+      
+      // host is the frame that contains this frame
+      const host = window.parent
+      // Check that we are in a subframe
+      if (host !== window){
+          const html = document.querySelector("html");
+          const observer = new ResizeObserver(([htmlEntry]) => {
+            if(htmlEntry.target === html){
+                const newHeight = htmlEntry.borderBoxSize[0].blockSize;
+                // We can use a specific origin to allow as receiver of the
+                // message instead of "*" (all).
+                host.postMessage(newHeight, "*");
+            }
+          });
+          observer.observe(html, { box: "border-box" });
+      }
+    </script>
+  </body>
+</html>
