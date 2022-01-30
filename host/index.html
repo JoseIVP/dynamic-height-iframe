@@ -49,11 +49,11 @@
     <script>
       const iframe = document.querySelector("#dynamic-height-iframe");
       const expectedSource = iframe.contentWindow;
-      // Same as the origin of the src from the iframe
+      // Same as the origin of the src from the iframe.
       const expectedOrigin = "http://localhost:8081";
       window.addEventListener("message", (event) => {
         // We can check this properties to make sure the message
-        // comes from the iframe and origin we expec:
+        // comes from the iframe and origin we expect:
         if (
           event.origin === expectedOrigin &&
           event.source === expectedSource &&

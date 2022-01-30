@@ -46,11 +46,12 @@
         document.body.append(p);
       }
       
-      // host is the frame that contains this frame
+      // host is the frame that contains this frame.
       const host = window.parent
-      // Check that we are in a subframe
+      // Check that we are in a subframe.
       if (host !== window){
           const html = document.querySelector("html");
+          // Use a ResizeObserver to check the size of the html tag.
           const observer = new ResizeObserver(([htmlEntry]) => {
             if(htmlEntry.target === html){
                 const newHeight = htmlEntry.borderBoxSize[0].blockSize;
