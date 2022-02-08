@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  host:
+    build: ./
+    ports:
+      - 8080:8080
+    volumes:
+      - ./host:/src
+  iframe:
+    build: ./
+    ports:
+      - 8081:8080
+    volumes:
+      - ./iframe:/src

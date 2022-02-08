@@ -6,61 +6,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      * {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
       html {
         background-color: #00bfb2;
         color: hsl(184, 58%, 16%);
         font-family: Arial, Helvetica, sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        padding-inline: 20px;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-block: 20px;
+      }
+
+      a,
+      button {
+        padding: 1em;
+        font-size: 16px;
+        transition: filter 200ms;
+        margin-block: 10px;
+      }
+
+      a {
+        color: #13315c;
+        background-color: #00bfb2;
+        border-radius: 3em;
+        display: inline-block;
       }
 
       button {
         background-color: #028090;
         border-style: none;
-        padding: 1em;
-        border-radius: .2em;
+        border-radius: 0.2em;
         color: white;
+        margin-right: 1ch;
+      }
+
+      :is(a, button):is(:hover, :focus) {
+        filter: brightness(0.8);
       }
     </style>
   </head>
   <body>
     <h1>Iframe site</h1>
 
-    <button onclick="addElement()">Add paragraph</button>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla nisi iusto
-      numquam possimus animi rem corrupti voluptate nostrum eum sint
-      voluptatibus est ipsam ducimus veniam, itaque officiis eius, maxime hic.
-    </p>
+    <button onclick="addElement()">Add p before target</button>
+    <button onclick="scrollToTarget()">Go to target</button>
+    <a href="#target">Go to target</a>
 
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, veritatis
-      magni? Sed itaque quis ratione consequatur iure nihil eos sint sit nam
-      vero, sequi repellendus omnis! Ipsam quos voluptatibus voluptate!
+      Add paragraphs to make the page grow and you'll see how the iframe
+      automatically resizes. Also, when the target section goes out of sight,
+      you can click the "Go to target" button or link and see how both work in
+      the standalone site (http://localhost:8081), but only the button works in
+      the iframe.
+    </p>
+
+    <h2 id="target">Target Section</h2>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet odio beatae
+      consequuntur harum dolorem veritatis, modi doloremque inventore vel? Rem?
     </p>
 
     <script>
+      const target = document.getElementById("target");
+
       function addElement() {
         const p = document.createElement("p");
         p.textContent = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, veritatis
             magni? Sed itaque quis ratione consequatur iure nihil eos sint sit nam
             vero, sequi repellendus omnis! Ipsam quos voluptatibus voluptate!`;
-        document.body.append(p);
+        document.body.insertBefore(p, target);
       }
-      
+
+      function scrollToTarget() {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+
       // host is the frame that contains this frame.
-      const host = window.parent
+      const host = window.parent;
       // Check that we are in a subframe.
-      if (host !== window){
-          const html = document.querySelector("html");
-          // Use a ResizeObserver to check the size of the html tag.
-          const observer = new ResizeObserver(([htmlEntry]) => {
-            if(htmlEntry.target === html){
-                const newHeight = htmlEntry.borderBoxSize[0].blockSize;
-                // We can use a specific origin to allow as receiver of the
-                // message instead of "*" (all).
-                host.postMessage(newHeight, "*");
-            }
-          });
-          observer.observe(html, { box: "border-box" });
+      if (host !== window) {
+        const html = document.querySelector("html");
+        // Use a ResizeObserver to check the size of the html tag.
+        const observer = new ResizeObserver(([htmlEntry]) => {
+          if (htmlEntry.target === html) {
+            const newHeight = htmlEntry.borderBoxSize[0].blockSize;
+            // We can use a specific origin to allow as receiver of the
+            // message instead of "*" (all).
+            host.postMessage(newHeight, "*");
+          }
+        });
+        observer.observe(html, { box: "border-box" });
       }
     </script>
   </body>

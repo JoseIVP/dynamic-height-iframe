@@ -12,10 +12,10 @@
         padding: 0;
       }
 
-      html{
-          background-color: #FF5666;
-          font-family: Arial, Helvetica, sans-serif;
-          color: hsl(184, 58%, 16%);
+      html {
+        background-color: #ff5666;
+        font-family: Arial, Helvetica, sans-serif;
+        color: hsl(184, 58%, 16%);
       }
 
       nav {
@@ -28,17 +28,19 @@
         font-weight: bold;
       }
 
+      /*
+      Leave default dimensions (300px x 150px), though
+      height will change because of the resize functionality.
+      */
       #dynamic-height-iframe {
         display: block;
-        /* resize: horizontal;
-        overflow: hidden; */
+        resize: horizontal;
+        overflow: hidden;
       }
     </style>
   </head>
   <body>
-    <nav>
-      A nav
-    </nav>
+    <nav>A nav</nav>
 
     <iframe
       id="dynamic-height-iframe"
