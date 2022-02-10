@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  host:
+    build:
+      context: .
+      dockerfile: host-dockerfile
+    ports:
+      - 7070:8080
+    volumes:
+      - ./host/src:/app/src
+  iframe:
+    build:
+      context: .
+      dockerfile: iframe-dockerfile
+    ports:
+      - 7071:8080
+    volumes:
+      - ./iframe:/src

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iframe page</title>
+    <style>
+      * {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        background-color: #00bfb2;
+        color: hsl(184, 58%, 16%);
+        font-family: Arial, Helvetica, sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      h1,
+      p {
+        margin: 20px auto;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Iframe page</h1>
+    <p>
+      Trying to execute code,<br />
+      open the console.
+    </p>
+    <script>
+      async function tryAccessingAudio() {
+        // console.log('Iframe page will try to access the audio API.');
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        console.log(stream);
+      }
+      tryAccessingAudio();
+      // Try accessing the iframe from inside (will be blocked because of cross-origin).
+      // const iframe = window.parent.document.querySelector('#test-iframe');
+      // iframe.style.border = '3px solid red';
+    </script>
+  </body>
+</html>

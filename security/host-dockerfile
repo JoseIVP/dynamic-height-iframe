@@ -1,0 +1,6 @@
+FROM node
+WORKDIR /app
+COPY ./host .
+RUN npm install
+CMD npx nodemon src/index.js
+EXPOSE 8080

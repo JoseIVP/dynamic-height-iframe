@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Host page</title>
+    <style>
+      * {
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        background-color: #ff5666;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 30px auto;
+      }
+
+      iframe {
+        display: block;
+        margin: auto;
+      }
+
+      p {
+        margin: 10px auto;
+        margin-bottom: 30px;
+        max-width: 600px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Host page</h1>
+
+    <p>
+      Although the request to use the Audio API is originally done in the page
+      inside the iframe (http://localhost:7071), the petition seems to transcend
+      the iframe and be done in the name of the host (http://localhost:7070)
+      (look at the message of the modal).
+    </p>
+
+    <p>
+      To deny access to the Audio API which the iframe is trying to access you
+      can remove the allow-same-origin value from the sandbox attribute of the
+      iframe, or change microphone to 'none' in its allow attribute, or remove
+      the http://localhost:7071 origin from the microphone list in the header
+      sent by the server (in src/index.js).
+    </p>
+
+    <p>
+      After a few refreshes, no matter if an API is allowed, if the user hasn't
+      responded to the modal asking for permission, the API will be blocked.
+      After that, the permission does not seem to change even if cache is
+      disabled in the browser (behaviour seen in Chrome, Firefox will keep
+      asking). Use an incognito window to test.
+    </p>
+
+    <iframe
+      id="test-iframe"
+      src="http://localhost:7071"
+      sandbox="allow-scripts allow-same-origin"
+      allow="microphone http://localhost:7071; accelerometer 'none'; ambient-light-sensor 'none'; background-fetch 'none'; background-sync 'none'; bluetooth 'none'; camera 'none'; display-capture 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; midi 'none'; nfc 'none'; notifications 'none'; persistent-storage 'none'; push 'none'; screen-wake-lock 'none'; speaker-selection 'none'; xr-spatial-tracking 'none';"
+      frameborder="0"
+    ></iframe>
+  </body>
+</html>
